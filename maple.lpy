@@ -1,0 +1,115 @@
+import random as rd
+
+phi = 90
+alpha = 40
+beta  = 25
+step = 0.5
+stepleaf = 5
+maximum_trunk_height = 3
+
+def outer_branch_length():
+  return rd.uniform(0.9, 1.2)
+def random_leaf_angle():
+  return rd.randint(-125,125)
+
+Axiom: _(0.6) T(0) A(1)
+
+derivation length: 850
+production:
+
+A(k):
+    if k <= 11:
+      if k <= maximum_trunk_height:
+          produce SetColor(7)F(0.01)A(k+1)
+      else:
+          produce /(phi)[+(alpha)C(0.1,k)k(0)]-(beta)C(step,k)
+C(x,k) :
+	if x >= 1:
+		if k <= 15:
+			produce SetColor(7) F(2,0.05+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())k(1)]A(k+1)[+(random_leaf_angle())&(random_leaf_angle())k(1)]
+		else:
+			produce SetColor(7) F(2,0.05+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())k(1)]
+	else:
+		produce C(x+step,k)
+
+k(s):
+  rnd = rd.random()
+  if (rnd < 0.9):
+    produce k(s+stepleaf)
+  else:
+    produce k(s)
+
+T(t):
+  if (t < maximum_trunk_height):
+    produce F(0.1),(7) TextureScale(1/80,1) T(t+0.042)
+  else:
+    produce T(t)R
+
+homomorphism:
+
+C(x,k):
+    d = 1
+    if k > 1:
+        d = 0.05+0.25* ((x/k)+(1-x)/(k-1))
+    else:
+        d = (0.3*(1-x))+((0.05+0.25/k)*x)
+    produce F(x, d)
+
+k(s):
+  
+  if 0 <= s < 100:
+    produce ;(10)@O(0.15)
+  elif 101 <= s < 118:
+    produce ;(10)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  elif 118 <= s <= 150:
+    produce ;(11)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  elif 150 <= s <= 210:
+    produce ;(12)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  elif 210 <= s <= 250:
+    produce ;(13)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  elif 250 <= s <= 290:
+    produce ;(14)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  elif 290 <= s <= 350:
+    produce ;(15)_(0.007)F(0.4){@D(0.4).F+(95)F(0.7)-(120)F(0.2)+(80)F-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F(0.5)+(150)F-(120)F(0.3)+(80)F -(120)F+(80)F(0.3)-(120)F +(150)F(0.5)-(120)F(0.2)+(80)F(0.5)-(120)F(0.5)+(80)F(0.2)-(120)F+(120)F(0.2)-(150)F(0.7)+(95)F}(True)
+  else:
+    produce
+  
+###### INITIALISATION ######
+
+__lpy_code_version__ = 1.1
+
+def __initialiseContext__(context):
+	import openalea.plantgl.all as pgl
+	PGL_94407909521088 = pgl.ImageTexture("PGL_94407909521088" , "./cortex.jpg" , )
+	PGL_94407909521088.name = "PGL_94407909521088"
+	Color_7 = pgl.Texture2D(image = PGL_94407909521088 , )
+	Color_7.name = "Color_7"
+	context.turtle.setMaterial(7,Color_7)
+	PGL_2397118262016 = pgl.ImageTexture("PGL_2397118262016" , "C:/Users/annas/Downloads/leaf.jpg" , )
+	PGL_2397118262016.name = "PGL_2397118262016"
+	Color_8 = pgl.Texture2D(image = PGL_2397118262016 , )
+	Color_8.name = "Color_8"
+	context.turtle.setMaterial(8,Color_8)
+	PGL_2397766114144 = pgl.ImageTexture("PGL_2397766114144" , "C:/Users/annas/Downloads/cortex.jpg" , )
+	PGL_2397766114144.name = "PGL_2397766114144"
+	Color_9 = pgl.Texture2D(image = PGL_2397766114144 , )
+	Color_9.name = "Color_9"
+	context.turtle.setMaterial(9,Color_9)
+	Color_10 = pgl.Material("Color_10" , ambient = (10,127,10) , diffuse = 1.37008 , specular = (18,18,18) , )
+	Color_10.name = "Color_10"
+	context.turtle.setMaterial(10,Color_10)
+	Color_11 = pgl.Material("Color_11" , ambient = (12,97,12) , diffuse = 1.2268 , )
+	Color_11.name = "Color_11"
+	context.turtle.setMaterial(11,Color_11)
+	Color_12 = pgl.Material("Color_12" , ambient = (4,68,0) , diffuse = 1.23529 , specular = (13,13,13) , emission = (24,24,24) , shininess = 0.5 , )
+	Color_12.name = "Color_12"
+	context.turtle.setMaterial(12,Color_12)
+	Color_13 = pgl.Material("Color_13" , ambient = (128,108,0) , diffuse = 1 , )
+	Color_13.name = "Color_13"
+	context.turtle.setMaterial(13,Color_13)
+	Color_14 = pgl.Material("Color_14" , ambient = (145,77,0) , diffuse = 0.806897 , )
+	Color_14.name = "Color_14"
+	context.turtle.setMaterial(14,Color_14)
+	Color_15 = pgl.Material("Color_15" , ambient = (126,35,0) , diffuse = 1.26984 , )
+	Color_15.name = "Color_15"
+	context.turtle.setMaterial(15,Color_15)
